@@ -1,5 +1,7 @@
 import './App.css';
 import CollegeBasketballTeams from './CollegeBasketballTeams.json';
+
+//Structuring the information from the DB based on the properties of each team
 interface Team {
   tid: number;
   cid: number;
@@ -14,20 +16,23 @@ interface Team {
   longitude: number;
 }
 
+//blueprint of the entire DB & teams is the property in the json file and it contains the
+//structuring information from the Team interface above
 interface CollegeBasketballData {
   teams: Team[];
 }
 
 function App() {
-  console.log(CollegeBasketballTeams);
-  // Access the 'teams' array from the CollegeBasketballTeams object
-  const collegeBasketballTeams: Team[] = CollegeBasketballTeams.teams;
+  // Creating a variable that will hold the information of the json file  from the
+  //array we created on the interface called Team
+  //the right side of the = refers to the json file name and its property called teams.
+  const BBTeams: Team[] = CollegeBasketballTeams.teams;
   return (
     <div className="App">
       <h1>MARCH MADNESS!!!</h1>
       <Welcome />
-      {/* Pass the 'teams' array to the TeamCards component */}
-      <TeamCards collegeBasketballTeams={collegeBasketballTeams} />
+      {/* Pass the 'BBTeams' array to the TeamCards component */}
+      <TeamCards collegeBasketballTeams={BBTeams} />
     </div>
   );
 }
@@ -40,14 +45,6 @@ function Welcome() {
       <br></br>
     </div>
   );
-}
-
-function TeamCards(props: { collegeBasketballTeams: Team[] }) {
-  const collegeBasketballTeams = props.collegeBasketballTeams;
-  const teamCards = collegeBasketballTeams.map((team, index) => (
-    <TeamCard key={index} team={team} />
-  ));
-  return <div className="TeamCards">{teamCards}</div>;
 }
 
 function TeamCard(props: { team: Team }) {
@@ -65,5 +62,13 @@ function TeamCard(props: { team: Team }) {
       </p>
     </div>
   );
+}
+
+function TeamCards(props: { collegeBasketballTeams: Team[] }) {
+  const collegeBasketballTeams = props.collegeBasketballTeams;
+  const teamCards = collegeBasketballTeams.map((team, index) => (
+    <TeamCard key={index} team={team} />
+  ));
+  return <div className="TeamCards">{teamCards}</div>;
 }
 export default App;
